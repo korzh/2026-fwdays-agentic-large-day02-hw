@@ -1,0 +1,30 @@
+---
+description: Excalidraw web app layer — collab, Firebase, imports from the library
+globs: excalidraw-app/**/*.ts,excalidraw-app/**/*.tsx,excalidraw-app/**/*.scss
+alwaysApply: false
+---
+
+# Excalidraw app (`excalidraw-app`)
+
+## Scope
+
+This workspace is the **product shell** around `@excalidraw/excalidraw`. Prefer implementing editor behavior in `packages/excalidraw` or lower packages; keep here only hosting-specific logic (collab, storage, PWA, routing).
+
+## Imports
+
+- Use **`@excalidraw/excalidraw`** (and other `@excalidraw/*` packages) for editor APIs — avoid deep imports into `packages/excalidraw/...` paths from the app.
+- Shared types/constants: `@excalidraw/common`, `@excalidraw/element` when the app truly needs them; do not duplicate editor internals.
+
+## Collab, data, Firebase
+
+- **`data/firebase.ts`**, **`collab/`**: treat as security-sensitive (keys, room IDs, uploads). Follow `.cursor/rules/security.md`.
+- Scene updates should go through the **public imperative API** (`excalidrawAPI.updateScene`, etc.) unless an existing internal hook is already used in this folder.
+
+## Styles
+
+- SCSS may import variables from the library (e.g. `packages/excalidraw/css/...`) — keep paths stable and avoid copying large bundles of editor styles into the app.
+
+## How to verify
+
+- From repo root: `yarn start` (runs `excalidraw-app`) and manually test flows you changed (collab, import/export, sidebar).
+- `yarn test:code` and targeted tests under `excalidraw-app/` if tests exist for the area.
