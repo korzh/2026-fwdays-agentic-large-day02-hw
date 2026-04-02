@@ -1,0 +1,31 @@
+---
+description: Vitest tests — layout, aliases, snapshots, and commands for this monorepo
+globs: "**/*.test.ts,**/*.test.tsx"
+alwaysApply: false
+---
+
+# Testing (Vitest)
+
+## Runner and environment
+
+- Tests use **Vitest** with **`jsdom`** and **`setupFiles: ./setupTests.ts`** (see `vitest.config.mts`). Prefer **`globals: true`** APIs (`describe`, `it`, `expect`, `vi`) without importing them in every file unless a file already uses explicit imports.
+- **Path aliases** resolve `@excalidraw/*` packages to `packages/*` — write imports the same way as production code.
+
+## Placement
+
+- **Colocate** tests next to source or under `tests/` inside the same package (e.g. `packages/excalidraw/tests/`, `packages/element/tests/`), matching existing patterns in that folder.
+- Name: `*.test.ts` / `*.test.tsx` (see `convections.mdc` for component tests).
+
+## Snapshots and UI tests
+
+- If output changes intentionally, update snapshots with **`yarn test:update`** (root), not by hand-editing `.snap` files without review.
+- Canvas- and editor-heavy tests often rely on shared helpers; reuse existing test utilities from `packages/excalidraw/tests/`, `setupTests.ts`, or package-local helpers before adding new abstractions.
+
+## Mocks
+
+- Use **`vi.mock`** for modules (Firebase, network, etc.) — follow patterns in nearby tests (e.g. `excalidraw-app/tests/collab.test.tsx`).
+
+## How to verify
+
+- Run **`yarn test`** (vitest) or a focused file: `yarn vitest run path/to/file.test.tsx`.
+- Before commit: **`yarn test:update`** when snapshots change, then **`yarn test:typecheck`** per `AGENTS.md`.
