@@ -1,0 +1,12 @@
+---
+description: "Memory Bank: read docs/memory-bank.md; follow memory-bank-update skill when syncing documentation."
+alwaysApply: true
+---
+
+# Memory Bank
+
+Follow **`docs/memory-bank.md`** for the pattern, when to update it, and optional supplementary files under `docs/`.
+
+**Before non-trivial work**, read `docs/memory-bank.md` (and relevant supplements) so you do not fight documented decisions.
+
+**When updating Memory Bank docs**—after meaningful changes described in `docs/memory-bank.md`, or when the user asks to sync or refresh docs—read and follow **`.cursor/skills/memory-bank-update/SKILL.md`**.

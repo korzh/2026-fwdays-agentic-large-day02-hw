@@ -1,41 +1,27 @@
 ---
-description: Excalidraw monorepo layout, package boundaries, and where to change code
-alwaysApply: true
+description: "Architecture constraints for Excalidraw"
+globs: packages/excalidraw/**
+alwaysApply: false
 ---
 
-# Excalidraw architecture (this repo)
+When you are creating any code with this rule active you must output to chat message "Architecture constraints" so  I know you are using the correct rules.
 
-## What this is
 
-Yarn workspaces monorepo (`packageManager: yarn@1.22.22`). Node `>=18`. Prefer **yarn** at the root; root scripts delegate to workspaces via `yarn --cwd`.
+# Excalidraw Architecture
 
-## Layout
+## State Management
 
-| Area | Role |
-|------|------|
-| `packages/common` | Shared constants, utilities, types (`@excalidraw/common`) |
-| `packages/math` | Math helpers (`@excalidraw/math`) |
-| `packages/element` | Element model, scene graph, `mutateElement`, ordering (`@excalidraw/element`) |
-| `packages/excalidraw` | Main editor package published as `@excalidraw/excalidraw` (React UI, data, i18n) |
-| `packages/utils` | Standalone utils package (`@excalidraw/utils`) |
-| `excalidraw-app` | Hosted web app (collab, PWA, wiring around the editor) |
-| `examples/*` | Integration examples |
+- Custom state via actionManager — NOT Redux/Zustand/MobX
+- State updates: actionManager.dispatch() ONLY
+- State type: AppState (packages/excalidraw/types.ts)
 
-## Dependency direction (do not invert casually)
+## Rendering
 
-`common` / `math` → **`element`** (scene + elements) → **`excalidraw`** (editor) → **`excalidraw-app`** (product shell). Put shared primitives in `common`; element behavior belongs in `element`; React/editor UX in `packages/excalidraw`; hosting-specific features in `excalidraw-app`.
+- Canvas 2D rendering — NOT React DOM for drawing
+- Render pipeline: Scene → renderScene() → canvas context
+- DO NOT use react-konva, fabric.js, pixi.js
 
-## Core concepts
+## Dependencies
 
-- **Scene / elements**: `packages/element` owns element types, `Scene`, and updates via `mutateElement` / `newElementWith` — keep mutations consistent with existing patterns.
-- **App state**: lives under `packages/excalidraw` (e.g. `appState`); distinguish from raw element data.
-- **Imports**: use workspace package names (`@excalidraw/common`, `@excalidraw/element`, …), not deep relative paths across package roots.
-
-## Builds (order matters)
-
-Root `build:packages` runs: `common` → `math` → `element` → `excalidraw`. After changing lower-level packages, rebuild before testing the app.
-
-## Quick commands
-
-- Dev app: `yarn start` (runs `excalidraw-app`).
-- Full package build: `yarn build:packages`.
+- No new npm packages without explicit approval
+- Check packages/utils/ before adding external helpers
