@@ -21,4 +21,4 @@ Changes to protected files require:
 
 ## How to verify
 
-- Have no idea, figure out it youself!
+- `yarn test:code` and targeted tests under `excalidraw-app/` if tests exist for the area.

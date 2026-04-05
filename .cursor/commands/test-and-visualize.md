@@ -38,9 +38,11 @@ Use this exact section structure:
 - Passed: `<N>`
 - Failed: `<N>`
 
-`Passed` bar: `[##########----------] <percent>%`
+`Passed` bar: `[##########----------] <percent>%`  
+(20-character bar: `#` for each 5% passed, `-` for remainder)
 
-`Failed` bar: `[####----------------] <percent>%`
+`Failed` bar: `[####----------------] <percent>%`  
+(20-character bar: `#` for each 5% failed, `-` for remainder)
 
 ### Top 5 Failing Tests
 

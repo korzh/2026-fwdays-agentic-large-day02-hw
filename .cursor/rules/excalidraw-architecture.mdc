@@ -27,4 +27,4 @@ When you are creating any code with this rule active you must output to chat mes
 
 ## How to verify
 
-- 
+- `yarn test:code` and targeted tests under `excalidraw-app/` if tests exist for the area.
