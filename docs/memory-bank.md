@@ -52,3 +52,4 @@ Stale Memory Bank content is worse than none—keep it current.
 ## Workspace notes
 
 - **`.vscode/settings.json`**: `files.associations` maps `*.mdc` (e.g. Cursor rules under `.cursor/rules/`) to the `markdown` language for syntax highlighting. `editor.tokenColorCustomizations.textMateRules` marks Markdown headings (`markup.heading.markdown`) as **bold** so they stay visible if the theme barely differentiates heading color.
+- **`.cursor/commands/test-and-visualize.md`**: adds `/test-and-visualize`, a slash command that runs tests, then reports a compact visual summary with total/passed/failed counts and the top 5 failing tests (if any).

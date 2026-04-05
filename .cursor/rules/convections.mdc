@@ -24,3 +24,6 @@ alwaysApply: false
 - kebab-case for files: `element-utils.ts`
 - PascalCase for components: `LayerUI.tsx`
 
+## How to verify
+
+- Have no idea, figure out it youself!
